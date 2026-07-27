@@ -1,0 +1,22 @@
+### Maven ###
+target/
+
+### IntelliJ IDEA ###
+.idea/
+*.iml
+
+### OS ###
+.DS_Store
+Thumbs.db
+
+### Build output ###
+out/
+
+### Runtime data ###
+data/
+
+### Claude Code session files ###
+.claude/
+
+### Local artifacts ###
+*.plan.md
