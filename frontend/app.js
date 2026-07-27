@@ -20,7 +20,7 @@ const toast = $('toast');
 let toastTimer = null;
 
 function iso(d) { return typeof d === 'string' ? d : d.toISOString().slice(0,10); }
-function parseDate(s) { const [y,m,d]=s.split('-').map(Number); return new Date(y,m,d); }
+function parseDate(s) { const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); }
 function fmtDate(s) { const d = parseDate(s); return d.toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'}); }
 function fmtShort(s) { const d = parseDate(s); return d.toLocaleDateString('en-US', {month:'short', day:'numeric'}); }
 
@@ -325,9 +325,6 @@ function renderPredictions() {
       ['Luteal phase', `${e.lutealPhaseDays} days`],
       ['Last period start', e.lastPeriodStart ? fmtDate(e.lastPeriodStart) : '—'],
     ];
-    if (e.excludedCycles?.length > 0) {
-      rows.push(['Excluded cycles', e.excludedCycles.join(', ')]);
-    }
     $('explanation-body').innerHTML = '<div class="exp-body">'
       + rows.map(r => `<div class="exp-row"><span class="exp-label">${r[0]}</span><span class="exp-value">${r[1]}</span></div>`).join('')
       + '</div>';

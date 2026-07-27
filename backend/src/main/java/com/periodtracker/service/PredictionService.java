@@ -1,11 +1,11 @@
 package com.periodtracker.service;
 
-import com.periodtracker.config.PredictionProperties;
 import com.periodtracker.dto.PredictionResponse;
 import com.periodtracker.entity.UserProfile;
 import com.periodtracker.exception.NotFoundException;
-import com.periodtracker.prediction.CyclePredictor;
-import com.periodtracker.prediction.OnboardingRequiredException;
+import com.periodtracker.exception.OnboardingRequiredException;
+import com.periodtracker.prediction.CyclePredictionStrategy;
+import com.periodtracker.prediction.Prediction;
 import com.periodtracker.repository.UserRepository;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -15,14 +15,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class PredictionService {
 
-    private final CyclePredictor predictor;
+    private final CyclePredictionStrategy predictor;
     private final CycleStatisticsService statsService;
     private final UserRepository userRepository;
 
-    public PredictionService(PredictionProperties props,
+    public PredictionService(CyclePredictionStrategy predictor,
                              CycleStatisticsService statsService,
                              UserRepository userRepository) {
-        this.predictor = new CyclePredictor(props);
+        this.predictor = predictor;
         this.statsService = statsService;
         this.userRepository = userRepository;
     }
@@ -40,7 +40,7 @@ public class PredictionService {
         }
 
         List<LocalDate> periodStartDates = statsService.getPeriodStartDates(userId);
-        CyclePredictor.Prediction p = predictor.predict(
+        Prediction p = predictor.predict(
                 periodStartDates,
                 profile.getTypicalCycleLengthDays(),
                 profile.getTypicalPeriodDurationDays(),
@@ -68,8 +68,7 @@ public class PredictionService {
                 p.dataSource(),
                 p.confidenceNote(),
                 p.lutealPhaseDays(),
-                p.lastPeriodStart(),
-                p.excludedCycles()
+                p.lastPeriodStart()
         );
 
         return new PredictionResponse(nextPeriod, ovulation, explanation, Instant.now());

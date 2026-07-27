@@ -22,10 +22,12 @@ C:\Users\rrutu\OneDrive\Documents\maas\backend\src\main\java\com\periodtracker\e
 C:\Users\rrutu\OneDrive\Documents\maas\backend\src\main\java\com\periodtracker\entity\UserProfile.java
 C:\Users\rrutu\OneDrive\Documents\maas\backend\src\main\java\com\periodtracker\exception\GlobalExceptionHandler.java
 C:\Users\rrutu\OneDrive\Documents\maas\backend\src\main\java\com\periodtracker\exception\NotFoundException.java
+C:\Users\rrutu\OneDrive\Documents\maas\backend\src\main\java\com\periodtracker\exception\OnboardingRequiredException.java
 C:\Users\rrutu\OneDrive\Documents\maas\backend\src\main\java\com\periodtracker\exception\ValidationException.java
 C:\Users\rrutu\OneDrive\Documents\maas\backend\src\main\java\com\periodtracker\PeriodTrackerApplication.java
+C:\Users\rrutu\OneDrive\Documents\maas\backend\src\main\java\com\periodtracker\prediction\CyclePredictionStrategy.java
 C:\Users\rrutu\OneDrive\Documents\maas\backend\src\main\java\com\periodtracker\prediction\CyclePredictor.java
-C:\Users\rrutu\OneDrive\Documents\maas\backend\src\main\java\com\periodtracker\prediction\OnboardingRequiredException.java
+C:\Users\rrutu\OneDrive\Documents\maas\backend\src\main\java\com\periodtracker\prediction\Prediction.java
 C:\Users\rrutu\OneDrive\Documents\maas\backend\src\main\java\com\periodtracker\repository\PeriodLogRepository.java
 C:\Users\rrutu\OneDrive\Documents\maas\backend\src\main\java\com\periodtracker\repository\SymptomCatalogRepository.java
 C:\Users\rrutu\OneDrive\Documents\maas\backend\src\main\java\com\periodtracker\repository\UserCycleStatsRepository.java
@@ -36,3 +38,4 @@ C:\Users\rrutu\OneDrive\Documents\maas\backend\src\main\java\com\periodtracker\s
 C:\Users\rrutu\OneDrive\Documents\maas\backend\src\main\java\com\periodtracker\service\PredictionService.java
 C:\Users\rrutu\OneDrive\Documents\maas\backend\src\main\java\com\periodtracker\service\ProfileService.java
 C:\Users\rrutu\OneDrive\Documents\maas\backend\src\main\java\com\periodtracker\service\UserService.java
+C:\Users\rrutu\OneDrive\Documents\maas\backend\src\main\java\com\periodtracker\util\StatsUtils.java

@@ -8,6 +8,7 @@ import com.periodtracker.entity.UserCycleStats;
 import com.periodtracker.exception.NotFoundException;
 import com.periodtracker.exception.ValidationException;
 import com.periodtracker.repository.PeriodLogRepository;
+import com.periodtracker.util.StatsUtils;
 import com.periodtracker.repository.UserCycleStatsRepository;
 import com.periodtracker.repository.UserProfileRepository;
 import com.periodtracker.repository.UserRepository;
@@ -170,22 +171,15 @@ public class PeriodService {
 
         stats.setSampleSize(cycleLengths.size());
         if (!cycleLengths.isEmpty()) {
-            double avg = cycleLengths.stream().mapToLong(Long::longValue).average().orElse(0);
-            stats.setAvgCycleLength(avg);
-            // Standard deviation requires at least 2 data points
+            stats.setAvgCycleLength(StatsUtils.mean(cycleLengths));
             if (cycleLengths.size() >= 2) {
-                double variance = cycleLengths.stream()
-                        .mapToDouble(d -> Math.pow(d - avg, 2)).average().orElse(0);
-                stats.setCycleLengthStddev(Math.sqrt(variance));
+                stats.setCycleLengthStddev(StatsUtils.stdDev(cycleLengths));
             }
         }
         if (!durations.isEmpty()) {
-            double avg = durations.stream().mapToLong(Long::longValue).average().orElse(0);
-            stats.setAvgPeriodDuration(avg);
+            stats.setAvgPeriodDuration(StatsUtils.mean(durations));
             if (durations.size() >= 2) {
-                double variance = durations.stream()
-                        .mapToDouble(d -> Math.pow(d - avg, 2)).average().orElse(0);
-                stats.setPeriodDurationStddev(Math.sqrt(variance));
+                stats.setPeriodDurationStddev(StatsUtils.stdDev(durations));
             }
         }
         stats.setLastPeriodStart(logs.get(logs.size() - 1).getStartDate());

@@ -2,7 +2,6 @@ package com.periodtracker.dto;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.List;
 
 public record PredictionResponse(
         NextPeriod nextPeriod,
@@ -37,7 +36,6 @@ public record PredictionResponse(
             String dataSource,
             String confidenceNote,
             int lutealPhaseDays,
-            LocalDate lastPeriodStart,
-            List<Integer> excludedCycles) {
+            LocalDate lastPeriodStart) {
     }
 }

@@ -1,4 +1,4 @@
-package com.periodtracker.prediction;
+package com.periodtracker.exception;
 
 public class OnboardingRequiredException extends RuntimeException {
 

@@ -1,7 +1,7 @@
 package com.periodtracker.exception;
 
 import com.periodtracker.dto.ErrorResponse;
-import com.periodtracker.prediction.OnboardingRequiredException;
+
 import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,12 +1,15 @@
 package com.periodtracker.prediction;
 
 import com.periodtracker.config.PredictionProperties;
+import com.periodtracker.util.StatsUtils;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
-public class CyclePredictor {
+@Component
+public class CyclePredictor implements CyclePredictionStrategy {
 
     private final int windowSize;          // number of recent cycles used for rolling average
     private final int observedMinSample;   // minimum observed cycles before switching to real data
@@ -39,7 +42,6 @@ public class CyclePredictor {
         String method;
         String dataSource;
         String confidenceNote;
-        List<Integer> excludedCycles = new ArrayList<>();
 
         // Fall back to onboarding defaults until we have enough real data
         if (sampleSize < observedMinSample) {
@@ -51,25 +53,21 @@ public class CyclePredictor {
                     ? "Based on your onboarding info. Log your first period to get started."
                     : "Based on your onboarding info. Log more periods to improve accuracy.";
         } else {
-            // Filter observed cycle lengths to a physiological range (21-45 days)
+            // Collect all observed cycle lengths from consecutive start dates
             List<Double> cycleLengths = new ArrayList<>();
             for (int i = 1; i < periodStartDates.size(); i++) {
                 long days = ChronoUnit.DAYS.between(
                         periodStartDates.get(i - 1), periodStartDates.get(i));
-                if (days >= 21 && days <= 45) {
-                    cycleLengths.add((double) days);
-                } else {
-                    excludedCycles.add(i);
-                }
+                cycleLengths.add((double) days);
             }
 
-            // Rolling window over the most recent valid cycles
+            // Rolling window over the most recent cycles
             int effectiveSampleSize = cycleLengths.size();
             int start = Math.max(0, effectiveSampleSize - windowSize);
             List<Double> window = cycleLengths.subList(start, effectiveSampleSize);
 
-            avgCycleLength = mean(window);
-            stdDev = Math.max(stdDev(window), 2.0);
+            avgCycleLength = StatsUtils.mean(window);
+            stdDev = Math.max(StatsUtils.stdDev(window), 2.0);
             method = "rolling_average_with_variance_band";
             dataSource = "observed";
             confidenceNote = "Based on your last " + window.size() + " observed cycles.";
@@ -104,41 +102,7 @@ public class CyclePredictor {
                 dataSource,
                 confidenceNote,
                 lutealPhaseDays,
-                anchorDate,
-                excludedCycles
+                anchorDate
         );
-    }
-
-    // Average of a list of values
-    private double mean(List<Double> values) {
-        return values.stream().mapToDouble(Double::doubleValue).average().orElse(0);
-    }
-
-    // Population standard deviation
-    private double stdDev(List<Double> values) {
-        double m = mean(values);
-        double sumSq = values.stream().mapToDouble(v -> Math.pow(v - m, 2)).sum();
-        return Math.sqrt(sumSq / values.size());
-    }
-
-    public record Prediction(
-            LocalDate predictedNextStart,
-            LocalDate earliest,
-            LocalDate latest,
-            double confidenceLevel,
-            LocalDate predictedOvulation,
-            LocalDate fertileStart,
-            LocalDate fertileEnd,
-            String method,
-            int sampleSize,
-            double avgCycleLength,
-            double cycleLengthStdDev,
-            int onboardingBaselineDays,
-            int onboardingPeriodDurationDays,
-            String dataSource,
-            String confidenceNote,
-            int lutealPhaseDays,
-            LocalDate lastPeriodStart,
-            List<Integer> excludedCycles) {
     }
 }
