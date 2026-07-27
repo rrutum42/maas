@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Period Tracker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <h1 class="app-title">Period Tracker</h1>
+    <div class="user-switcher">
+      <label for="user-select">User:</label>
+      <select id="user-select"><option value="">Loading users…</option></select>
+    </div>
+  </header>
+
+  <section id="onboarding" class="panel onboarding-panel hidden">
+    <h2>Welcome! Let's set up your tracker</h2>
+    <p class="onboarding-sub">Tell us about your typical cycle so we can start making predictions right away.</p>
+    <form id="onboarding-form">
+      <div class="form-row">
+        <label for="cycle-length">Typical cycle length (days)</label>
+        <input type="number" id="cycle-length" min="21" max="45" value="28" required>
+      </div>
+      <div class="form-row">
+        <label for="period-duration">Typical period duration (days)</label>
+        <input type="number" id="period-duration" min="2" max="10" value="5" required>
+      </div>
+      <div class="form-row">
+        <label for="last-period">Last period start date</label>
+        <input type="date" id="last-period" required>
+      </div>
+      <button type="submit" class="btn-primary">Save &amp; Continue</button>
+    </form>
+  </section>
+
+  <div id="dashboard" class="hidden">
+    <div class="dashboard-grid">
+
+      <section class="panel calendar-panel">
+        <div class="calendar-header">
+          <button id="cal-prev" class="btn-icon">&larr;</button>
+          <span id="cal-label"></span>
+          <button id="cal-next" class="btn-icon">&rarr;</button>
+        </div>
+        <table class="calendar-grid">
+          <thead><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr></thead>
+          <tbody id="cal-body"></tbody>
+        </table>
+        <div class="calendar-legend">
+          <span class="legend-dot dot-period"></span> Period
+          <span class="legend-dot dot-predicted"></span> Predicted
+          <span class="legend-dot dot-fertile"></span> Fertile window
+        </div>
+      </section>
+
+      <section class="panel log-panel">
+        <h2>Log a Period</h2>
+        <form id="log-form">
+          <div class="form-row">
+            <label for="log-start">Start date</label>
+            <input type="date" id="log-start" required>
+          </div>
+          <div class="form-row">
+            <label for="log-end">End date <span class="field-hint">(optional)</span></label>
+            <input type="date" id="log-end">
+          </div>
+          <div class="form-row">
+            <label for="log-flow">Flow intensity <span class="field-hint">(1–5, optional)</span></label>
+            <div class="flow-selector" id="log-flow">
+              <button type="button" data-value="1">1</button>
+              <button type="button" data-value="2">2</button>
+              <button type="button" data-value="3">3</button>
+              <button type="button" data-value="4">4</button>
+              <button type="button" data-value="5">5</button>
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="log-notes">Notes <span class="field-hint">(optional)</span></label>
+            <input type="text" id="log-notes" placeholder="e.g. heavy flow" maxlength="500">
+          </div>
+          <button type="submit" class="btn-primary">Log Period</button>
+          <div id="log-feedback" class="feedback hidden"></div>
+        </form>
+
+        <h3 class="history-title">Recent Periods</h3>
+        <div id="period-history">
+          <p class="empty-state">No periods logged yet.</p>
+        </div>
+      </section>
+
+      <section class="panel insights-panel">
+        <h2>Predictions</h2>
+        <div id="predictions-content">
+          <div class="prediction-card" id="pred-next-period">
+            <div class="pred-label">Next period</div>
+            <div class="pred-value" id="pred-date">—</div>
+            <div class="pred-sub" id="pred-band"></div>
+          </div>
+          <div class="prediction-card" id="pred-ovulation">
+            <div class="pred-label">Ovulation</div>
+            <div class="pred-value" id="ovu-date">—</div>
+            <div class="pred-sub" id="ovu-window"></div>
+          </div>
+          <div class="prediction-card" id="pred-confidence">
+            <div class="pred-label">Confidence</div>
+            <div class="pred-value" id="conf-level">—</div>
+            <div class="pred-sub" id="conf-note"></div>
+          </div>
+          <details class="explanation-details">
+            <summary>How we calculated this</summary>
+            <div id="explanation-body"></div>
+          </details>
+        </div>
+        <div id="predictions-empty" class="empty-state hidden">
+          <p>Log your first period to see predictions here.</p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
