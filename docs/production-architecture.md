@@ -1,8 +1,8 @@
-# MaaS — Production Architecture
+# maas — Production Architecture
 
 ## Overview
 
-MaaS (Menstrual health as a Service) is designed as a **microservice architecture** from day one, with each service owning its own data store and communicating via asynchronous events where possible. The prediction engine uses a **strategy pattern** to allow swapping from a simple statistical baseline to ML-based models without changing the caller.
+maas (Menstrual health as a Service) is designed as a **microservice architecture** from day one, with each service owning its own data store and communicating via asynchronous events where possible. The prediction engine uses a **strategy pattern** to allow swapping from a simple statistical baseline to ML-based models without changing the caller.
 
 ## Architecture Diagram
 
