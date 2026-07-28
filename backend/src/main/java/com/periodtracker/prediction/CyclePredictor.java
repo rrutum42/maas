@@ -89,7 +89,6 @@ public class CyclePredictor implements CyclePredictionStrategy {
                 predictedNextStart,
                 earliest,
                 latest,
-                0.68,               // confidence level (1 std dev ≈ 68%)
                 predictedOvulation,
                 fertileStart,
                 fertileEnd,

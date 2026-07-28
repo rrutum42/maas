@@ -6,7 +6,6 @@ public record Prediction(
         LocalDate predictedNextStart,
         LocalDate earliest,
         LocalDate latest,
-        double confidenceLevel,
         LocalDate predictedOvulation,
         LocalDate fertileStart,
         LocalDate fertileEnd,

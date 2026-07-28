@@ -309,8 +309,6 @@ function renderPredictions() {
     $('ovu-window').textContent = '';
   }
 
-  const confPct = p.nextPeriod ? Math.round(p.nextPeriod.confidenceLevel * 100) : '—';
-  $('conf-level').textContent = typeof confPct === 'number' ? `${confPct}%` : '—';
   $('conf-note').textContent = p.explanation?.confidenceNote || '';
 
   if (p.explanation) {

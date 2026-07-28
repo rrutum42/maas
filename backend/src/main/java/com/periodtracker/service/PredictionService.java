@@ -49,8 +49,7 @@ public class PredictionService {
 
         PredictionResponse.NextPeriod nextPeriod = new PredictionResponse.NextPeriod(
                 p.predictedNextStart(),
-                new PredictionResponse.ConfidenceBand(p.earliest(), p.latest()),
-                p.confidenceLevel()
+                new PredictionResponse.ConfidenceBand(p.earliest(), p.latest())
         );
 
         PredictionResponse.Ovulation ovulation = new PredictionResponse.Ovulation(

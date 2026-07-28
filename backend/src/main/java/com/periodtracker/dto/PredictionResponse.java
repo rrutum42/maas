@@ -11,8 +11,7 @@ public record PredictionResponse(
 
     public record NextPeriod(
             LocalDate predictedStartDate,
-            ConfidenceBand confidenceBand,
-            double confidenceLevel) {
+            ConfidenceBand confidenceBand) {
     }
 
     public record Ovulation(
